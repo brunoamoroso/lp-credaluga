@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Rubik:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/x-icon" href="/imgs/favicon.ico">
+    <title>Calculadora - CredAluga</title>
+
+    <script>
+      function handleSubmit(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        //form
+        const form = document.getElementById("calc_data");
+
+        if (!form.checkValidity()) {
+          form.classList.add("was-validated");
+        }
+
+        //gettins values
+        const num_default_properties = document.getElementById(
+          "num_default_properties"
+        ).value;
+        const avg_ticket = document.getElementById("avg_ticket").value;
+        const avg_contract_duration = document.getElementById(
+          "avg_contract_duration"
+        ).value;
+        const avg_tax = document.getElementById("avg_tax").value;
+
+        if (
+          num_default_properties === "" ||
+          num_default_properties === null ||
+          num_default_properties === undefined
+        ) {
+          return;
+        }
+
+        if (
+          avg_ticket === "" ||
+          avg_ticket === null ||
+          avg_ticket === undefined
+        ) {
+          return;
+        }
+
+        if (
+          avg_contract_duration === "" ||
+          avg_contract_duration === null ||
+          avg_contract_duration === undefined
+        ) {
+          return;
+        }
+
+        if (avg_tax === "" || avg_tax === null || avg_tax === undefined) {
+          return;
+        }
+
+        //save items
+        form1Data = {
+          "num_default_properties": num_default_properties,
+          "avg_ticket": avg_ticket,
+          "avg_contract_duration":  avg_contract_duration,
+          "avg_tax": avg_tax,
+        }
+        
+        localStorage.setItem("form1Data", JSON.stringify(form1Data));
+
+        window.location.href = "http://127.0.0.1:5500/page-2.html";
+      }
+
+      function handleScroll(){
+        const calculator = document.getElementById("calculator").getBoundingClientRect();
+        const top = calculator.top;
+
+        window.scrollTo({
+          top: top,
+          behavior: "smooth",
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="d-none d-md-flex">
+        <img
+          class="d-none d-md-block"
+          src="./imgs/logo-credaluga.png"
+          alt="logo CredAluga"
+          style="height: 24px"
+        />
+        <div id="social-links">
+          <i class="bi bi-facebook"></i>
+          <i class="bi bi-instagram"></i>
+          <i class="bi bi-linkedin"></i>
+        </div>
+      </nav>
+
+      <nav class="d-flex d-md-none">
+        <img
+          class="d-block d-md-none"
+          src="./imgs/logo-collapse.png"
+          alt="logo CredAluga"
+          style="height: 24px"
+        />
+        <div id="social-links">
+          <i class="bi bi-facebook"></i>
+          <i class="bi bi-instagram"></i>
+          <i class="bi bi-linkedin"></i>
+        </div>
+      </nav>
+    </div>
+    <div class="container-fluid" style="position: relative">
+      <div class="container" style="position: relative; z-index: 2">
+        <div class="hero row">
+          <div
+            class="col-12 col-md-6"
+            style="display: flex; flex-direction: column; gap: 16px"
+          >
+            <div class="row">
+              <h1 class="display-medium">
+                Chegou a calculadora de Inadimplência CredAluga
+              </h1>
+              <p>
+                Na busca incessante por uma administração de imóveis mais eficaz
+                e livre de preocupações, apresentamos a Calculadora de
+                Inadimplência CredAluga. Uma ferramenta revolucionária que
+                transformará a forma como você lida com a inadimplência.
+              </p>
+              <p>
+                Avalie a saúde financeira da sua imobiliária e monitore as
+                perdas com a falta de pagamento por parte dos inquilinos.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-md-5 offset-md-1">
+            <div class="row">
+              <div class="col">
+                <div id="calculator" class="form-box">
+                  <progress id="progress-bar" value="0" max="100"></progress>
+                  <p style="margin-bottom: 32px">
+                    Insira os dados abaixo e descubra como a CredAluga pode
+                    transformar a forma como você lida com inadimplências e a
+                    gestão financeira.
+                  </p>
+                  <form
+                    id="calc_data"
+                    class="needs-validation"
+                    action=""
+                    novalidate
+                  >
+                    <div class="form-floating form-group has-validation">
+                      <input
+                        type="text"
+                        id="num_default_properties"
+                        name="num_default_properties"
+                        class="form-control"
+                        placeholder="Número de Imóveis Inadimplentes"
+                        required
+                      /><label for="num_default_properties"
+                        >Número de Imóveis Inadimplentes</label
+                      >
+                      <div id="num_default_validation" class="invalid-feedback">
+                        É obrigatório que você preencha esse campo
+                      </div>
+                    </div>
+
+                    <div class="form-floating form-group">
+                      <input
+                        type="text"
+                        id="avg_ticket"
+                        name="avg_ticket"
+                        class="form-control"
+                        placeholder="Ticket Médio da Imobiliária"
+                        required
+                      /><label for="avg_ticket"
+                        >Ticket Médio da Imobiliária</label
+                      >
+                      <div id="avg_ticket_validation" class="invalid-feedback">
+                        É obrigatório que você preencha esse campo
+                      </div>
+                    </div>
+
+                    <div class="form-floating form-group">
+                      <input
+                        type="text"
+                        id="avg_contract_duration"
+                        name="avg_contract_duration"
+                        class="form-control"
+                        placeholder="Tempo Médio Contratual"
+                        required
+                      /><label for="avg_contract_duration"
+                        >Tempo Médio Contratual</label
+                      >
+                      <div class="form-text">
+                        Tempo médio de duração dos contratos de locação
+                      </div>
+                      <div
+                        id="avg_contract_duration_validation"
+                        class="invalid-feedback"
+                      >
+                        É obrigatório que você preencha esse campo
+                      </div>
+                    </div>
+
+                    <div class="form-floating form-group">
+                      <input
+                        type="text"
+                        id="avg_tax"
+                        name="avg_tax"
+                        class="form-control"
+                        placeholder="Taxa de Intermediação Média"
+                        required
+                      /><label for="avg_tax">Taxa de Intermediação Média</label>
+                      <div id="avg_tax_validation" class="invalid-feedback">
+                        É obrigatório que você preencha esse campo
+                      </div>
+                    </div>
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-lg"
+                      style="width: 100%; margin-top: 16px"
+                      onclick="handleSubmit(event)"
+                    >
+                      Calcular
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="hero-img-pg1" class="col-xs-12 col-md-5 col-lg-5">
+        <img src="/imgs/hero-pg-1.svg" alt="" style="width: 100%" />
+      </div>
+    </div>
+    <div class="container">
+      <div id="section-2" class="row">
+        <div class="col-xs-12 col-md-7">
+          <h2 class="display-small">
+            Quanto dinheiro sua imobiliária perde por causa da inadimplência?
+          </h2>
+          <p>
+            Você sabia que a média de prejuízo para imobiliárias com contratos
+            inadimplentes é de <strong>pelo menos R$4.600</strong> por contrato?
+            São horas de equipe envolvida, perdas de receitas e uma diminuição
+            significativa na retenção de proprietários.
+          </p>
+
+          <p>Mas não estamos aqui apenas para expor os desafios.</p>
+
+          <p>
+            Queremos oferecer uma solução real. Você pode ter em suas mãos uma
+            poderosa calculadora de inadimplência, capaz de te trazer clareza
+            sobre o tamanho dos prejuízos e perdas que sua imobiliária está
+            tendo. Queremos possibilitar a criação de novas estratégias e a
+            contenção de prejuízos.
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-5">
+          <img
+            style="width: 100%"
+            class="img-fluid"
+            src="/imgs/section2-pg1.svg"
+            alt=""
+          />
+        </div>
+      </div>
+      <div id="section-3" class="row">
+        <div class="col-xs-12 col-md-12">
+          <div class="row">
+            <div class="col-xs-7 col-md-7">
+              <h2 class="display-small">
+                A Calculadora de Inadimplência é Indispensável para Imobiliárias
+                que:
+              </h2>
+            </div>
+          </div>
+          <div class="row">
+            <div id="section-3-boxes" class="col-xs-12 col-md-12">
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <div class="benefits-box">
+                    <div class="icon"><img width="32" src="/imgs/img-profit.png" alt=""></div>
+                    <div class="text-content">
+                      <h3 class="headline-small">Buscam maximizar a rentabilidade</h3>
+                      <p>Oferece uma visão clara dos custos associados a inadimplência, permitindo a implementação de estratégias para minimizar prejuízos e otimizar os resultados financeiros.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <div class="benefits-box">
+                    <div class="icon"><img width="32" src="/imgs/img-riskmanagement.png" alt=""></div>
+                    <div class="text-content">
+                      <h3 class="headline-small">Desejam uma gestão de riscos eficiente</h3>
+                      <p>Facilita a identificação e avaliação dos riscos envolvidos na administração de contratos, auxiliando na tomada de decisões estratégicas para proteger o patrimônio da imobiliária.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <div class="benefits-box">
+                    <div class="icon"><img width="32" src="/imgs/img-operation.png" alt=""></div>
+                    <div class="text-content">
+                      <h3 class="headline-small">Procuram otimizar processos operacionais</h3>
+                      <p>Agiliza a análise e o planejamento financeiro, proporcionando uma visão abrangente dos custos envolvidos na administração de contratos inadimplentes.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <div class="benefits-box">
+                    <div class="icon"><img width="32" src="/imgs/img-stars.png" alt=""></div>
+                    <div class="text-content">
+                      <h3 class="headline-small">Desejam fornecer um serviço diferenciado aos proprietários</h3>
+                      <p>Permite uma comunicação transparente sobre os desafios e custos associados à gestão de contratos, fortalecendo a relação de confiança com os proprietários.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-md-6 offset-md-3">
+          <button
+          type="submit"
+          class="btn btn-primary btn-lg"
+          style="width: 100%; margin-top: 104px"
+          onclick="handleScroll()"
+        >
+          Quero utilizar a calculadora
+        </button>
+        </div>
+      </div>
+      <div class="row">
+        <footer>
+          <div class="col-12">
+            <hr style="margin-bottom: 32px" />
+            <div class="row justify-content-between align-items-center">
+              <div class="col-xs-12 col-md-4 grid" style="row-gap: 32px">
+                <div class="row mb-2">
+                  <div
+                    class="col d-flex justify-content-center justify-content-md-start"
+                  >
+                    <img
+                      src="./imgs//gray-logo-credaluga.png"
+                      height="32px"
+                      width="180px"
+                      width="auto"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div
+                    class="col d-flex justify-content-center justify-content-md-start"
+                  >
+                    <span>A primeira opção de quem quer independência.</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-xs-12 col-md-3 d-flex justify-content-center justify-content-md-end mt-4 mt-md-0"
+                style="text-align: right"
+              >
+                <span>Todos os direitos reservados à CredAluga.</span>
+              </div>
+            </div>
+            <div class="row" id="fale-conosco">
+              <div class="col-xs-12 col-md-3" style="margin-top: 56px">
+                <div class="row mb-3">
+                  <div class="col" style="font-weight: 500">Fale Conosco</div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="row mb-2">
+                      <div class="col">(31) 3191 - 4866</div>
+                    </div>
+                    <div class="row">
+                      <div class="col">atendimento@credaluga.com.br</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

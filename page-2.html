@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Rubik:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Calculadora - CredAluga</title>
+    <script>
+      function handleSubmit(e) {
+        const form = document.getElementById("formData");
+        const sendSucessModal = new bootstrap.Modal("#sendSucess");
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!form.checkValidity()) {
+          form.classList.add("was-validated");
+        }
+
+        //gettins values
+        const realstate_name = document.getElementById("realstate_name").value;
+        const fullname = document.getElementById("fullname").value;
+        const cellphone = document.getElementById("cellphone").value;
+        const email = document.getElementById("email").value;
+
+        if (
+          realstate_name === "" ||
+          realstate_name === null ||
+          realstate_name === undefined
+        ) {
+          return;
+        }
+
+        if (fullname === "" || fullname === null || fullname === undefined) {
+          return;
+        }
+
+        if (cellphone === "" || cellphone === null || cellphone === undefined) {
+          return;
+        }
+
+        if (email === "" || email === null || email === undefined) {
+          return;
+        }
+
+        //save items
+        form2Data = {
+          "realstate_name": realstate_name,
+          "fullname": fullname,
+          "cellphone": cellphone,
+          "email": email,
+        }
+
+        localStorage.setItem("form2Data", JSON.stringify(form2Data));
+
+        sendSucessModal.show();
+      }
+    </script>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+      #btn-know-more {
+        display: flex;
+      }
+      @media (min-width: 768px) {
+        html,
+        body {
+          background-image: url(./imgs/bg-pg-2.png);
+        }
+        footer {
+          margin-top: 280px;
+        }
+        #know-more {
+          text-align: right;
+        }
+        #btn-know-more {
+          justify-content: end;
+        }
+      }
+      @media (max-width: 768px) {
+        footer {
+          margin-top: 180px;
+        }
+        #know-more {
+          text-align: left;
+        }
+        #btn-know-more {
+          justify-content: start;
+        }
+      }
+    </style>
+    <div class="container">
+      <nav class="d-none d-md-flex">
+        <img
+          class="d-none d-md-block"
+          src="./imgs/logo-credaluga.png"
+          alt="logo CredAluga"
+          style="height: 24px"
+        />
+        <div id="social-links">
+          <i class="bi bi-facebook"></i>
+          <i class="bi bi-instagram"></i>
+          <i class="bi bi-linkedin"></i>
+        </div>
+      </nav>
+
+      <nav class="d-flex d-md-none">
+        <img
+          class="d-block d-md-none"
+          src="./imgs/logo-collapse.png"
+          alt="logo CredAluga"
+          style="height: 24px"
+        />
+        <div id="social-links">
+          <i class="bi bi-facebook"></i>
+          <i class="bi bi-instagram"></i>
+          <i class="bi bi-linkedin"></i>
+        </div>
+      </nav>
+
+      <div class="hero row">
+        <div class="col-12 col-md-6">
+          <div class="row">
+            <div
+              class="col-12"
+              style="display: flex; flex-direction: column; gap: 16px"
+            >
+              <h1
+                class="display-medium"
+                style="margin-block-end: 0px"
+              >
+                Você está a um passo de uma locação mais eficiente
+              </h1>
+              <p>
+                Preencha seus dados ao lado e receba no seu email os cálculos
+                que vão te ajudar a realizar locações mais eficientes e
+                financeiramente vantajosas para a sua imobiliária.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-md-5 offset-md-1">
+          <div class="row">
+            <div class="col">
+              <div class="form-box">
+                <progress id="progress-bar" value="50" max="100"></progress>
+                <form
+                  action=""
+                  id="formData"
+                  class="needs-validation"
+                  novalidate
+                >
+                  <div class="form-floating form-group">
+                    <input
+                      type="text"
+                      id="realstate_name"
+                      name="realstate_name"
+                      class="form-control has-validation"
+                      placeholder="Nome da sua imobiliária"
+                      required
+                    /><label for="realstate_name"
+                      >Nome da sua imobiliária</label
+                    >
+                    <div class="invalid-feedback">
+                      É obrigatório que você preencha esse campo
+                    </div>
+                  </div>
+                  <div class="form-floating form-group">
+                    <input
+                      type="text"
+                      id="fullname"
+                      name="fullname"
+                      class="form-control has-validation"
+                      placeholder="Nome Completo"
+                      required
+                    /><label for="fullname">Nome Completo</label>
+                    <div id="avg_tax_validation" class="invalid-feedback">
+                      É obrigatório que você preencha esse campo
+                    </div>
+                  </div>
+
+                  <div class="form-floating form-group">
+                    <input
+                      type="text"
+                      id="cellphone"
+                      name="cellphone"
+                      class="form-control has-validation"
+                      placeholder="Celular"
+                      required
+                    /><label for="cellphone">Celular</label>
+                    <div class="invalid-feedback">
+                      É obrigatório que você preencha esse campo
+                    </div>
+                  </div>
+
+                  <div class="form-floating form-group">
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      class="form-control has-validation"
+                      placeholder="Email"
+                      required
+                    /><label id="email" for="num_imoveis_inadimplentes"
+                      >Email</label
+                    >
+                    <div class="invalid-feedback">
+                      É obrigatório que você preencha esse campo
+                    </div>
+                  </div>
+                  <button
+                    id="btnSubmit"
+                    type="submit"
+                    class="btn btn-primary btn-lg"
+                    style="width: 100%; margin-top: 16px"
+                    onclick="handleSubmit(event)"
+                  >
+                    Quero receber meu resultado
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="img-hero-pg-2" class="row">
+          <div class="col-12">
+            <img class="img-fluid" src="/imgs/hero-pg-2.svg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 120px">
+        <div class="col-xs-12 col-md-11 offset-md-1">
+          <div class="row" style="align-items: center;">
+            <div class="col-xs-12 col-md-5">
+              <h2 class="display-small">Quem somos</h2>
+              <p>
+                A CredAluga acredita no protagonismo das imobiliárias à
+                frente da gestão do aluguel. Nossa missão é impulsionar as
+                imobiliárias para liderarem a transformação do mercado
+                imobiliário brasileiro. Feita por empreendedores com DNA
+                imobiliário e comprometida com a segurança e a melhor
+                rentabilidade das carteiras de aluguel das imobiliárias,
+                somos a garantia locatícia que mais cresce no Brasil.
+              </p>
+            </div>
+            <div class="col-xs-12 col-md-5 offset-md-1" id="img-blumerdaniel">
+              <img
+                src="/imgs/BlumerDaniel-pg-2.png"
+                alt=""
+                class="img-fluid"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <footer>
+          <div class="col-12">
+            <hr style="margin-bottom: 32px" />
+            <div class="row justify-content-between align-items-center">
+              <div class="col-xs-12 col-md-4 grid" style="row-gap: 32px">
+                <div class="row mb-2">
+                  <div
+                    class="col d-flex justify-content-center justify-content-md-start"
+                  >
+                    <img
+                      src="./imgs//gray-logo-credaluga.png"
+                      height="32px"
+                      width="180px"
+                      width="auto"
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div
+                    class="col d-flex justify-content-center justify-content-md-start"
+                  >
+                    <span>A primeira opção de quem quer independência.</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-xs-12 col-md-3 d-flex justify-content-center justify-content-md-end mt-4 mt-md-0"
+                style="text-align: right"
+              >
+                <span>Todos os direitos reservados à CredAluga.</span>
+              </div>
+            </div>
+            <div class="row" id="fale-conosco">
+              <div class="col-xs-12 col-md-3" style="margin-top: 56px">
+                <div class="row mb-3">
+                  <div class="col" style="font-weight: 500">Fale Conosco</div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="row mb-2">
+                      <div class="col">(31) 3191 - 4866</div>
+                    </div>
+                    <div class="row">
+                      <div class="col">atendimento@credaluga.com.br</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="sendSucess"
+      tabindex="-1"
+      aria-labelledby="sendSucxess"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div
+            class="modal-body"
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 40px;
+              align-items: center;
+            "
+          >
+            <img
+              width="300"
+              style="display: flex"
+              src="./imgs//mail.png"
+              alt="mail send image"
+            />
+            <div class="modal-text-content" style="text-align: center">
+              <h1 class="display-small" style="margin-bottom: 16px">
+                Confira seu e-mail ✅
+              </h1>
+              <p>
+                Parabéns! Você está prestes a descobrir como fazer do aluguel uma experiência mais rentável.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
