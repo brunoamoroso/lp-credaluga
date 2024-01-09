@@ -97,31 +97,40 @@
         });
       }
 
+      function checkValidKey() {
+        const isValidKey = /([\d]|Backspace)/g.test(event.key);
+
+        if (!isValidKey) {
+          event.preventDefault();
+          return false;
+        }
+
+        return true;
+      }
+
       function formatCurrency() {
         event.preventDefault();
         const inputId = event.target.id;
         let newKey = event.key;
         let value = event.target.value;
-        const isValidKey = /([\d]|Backspace)/g.test(newKey);
 
-        if(!isValidKey){
+        if(!checkValidKey()){
           return;
         }
 
-        if(event.key === 'Backspace'){
+        if (event.key === "Backspace") {
           value = value.slice(0, -1);
           newKey = "";
         }
 
-        if(value !== ""){
+        if (value !== "") {
           const testBeyondZeros = /[1-9]/g.test(value);
-          if(testBeyondZeros){
-            value = parseInt(value.replace(/[^0-9]/g,""));
-          }else{ 
+          if (testBeyondZeros) {
+            value = parseInt(value.replace(/[^0-9]/g, ""));
+          } else {
             value = 0;
           }
         }
-        
 
         value = value + newKey;
         value = value / 100;
@@ -131,6 +140,33 @@
           currency: "BRL",
         }).format(value);
         document.getElementById(inputId).value = formattedValue;
+      }
+      
+      function formatAvgTax(){
+        event.preventDefault();
+        let key = event.key;
+        let value = event.target.value.replace(/[^0-9]/g, "");
+        const elementId = event.target.id;
+
+        if(!checkValidKey()){
+          return;
+        }
+
+        if (event.key === "Backspace") {
+          value = value.slice(0, -1);
+          key = "";
+
+          if(value.length === 0){
+            key = 0;
+          }
+        }
+
+        if(value === "0"){
+          value = "";
+        }
+
+        value = value.concat(key, '%');
+        document.getElementById(elementId).value = value;
       }
     </script>
   </head>
@@ -247,6 +283,7 @@
                         name="num_default_properties"
                         class="form-control"
                         placeholder="Número de Imóveis Inadimplentes"
+                        onkeydown="checkValidKey()"
                         required
                       /><label for="num_default_properties"
                         >Número de Imóveis Inadimplentes</label
@@ -280,6 +317,7 @@
                         name="avg_contract_duration"
                         class="form-control"
                         placeholder="Tempo Médio Contratual"
+                        onkeydown="checkValidKey()"
                         required
                       /><label for="avg_contract_duration"
                         >Tempo Médio Contratual</label
@@ -302,6 +340,7 @@
                         name="avg_tax"
                         class="form-control"
                         placeholder="Taxa de Intermediação Média"
+                        onkeydown="formatAvgTax()"
                         required
                       /><label for="avg_tax">Taxa de Intermediação Média</label>
                       <div id="avg_tax_validation" class="invalid-feedback">
