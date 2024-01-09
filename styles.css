@@ -281,13 +281,17 @@ progress {
 #section-3{
   margin-top: 128px;
 }
+
+#section-4{
+  margin-top: 128px;
+}
 .benefits-box {
   display: flex;
   gap: 24px;
   padding: 40px 24px;
 }
 
-#section-3-boxes{
+#section-4-boxes{
   margin-top: 48px;
 }
 
