@@ -19,7 +19,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" type="image/x-icon" href="/imgs/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/imgs/favicon.ico" />
     <title>Calculadora - CredAluga</title>
 
     <script>
@@ -74,25 +74,63 @@
 
         //save items
         form1Data = {
-          "num_default_properties": num_default_properties,
-          "avg_ticket": avg_ticket,
-          "avg_contract_duration":  avg_contract_duration,
-          "avg_tax": avg_tax,
-        }
-        
+          num_default_properties: num_default_properties,
+          avg_ticket: avg_ticket,
+          avg_contract_duration: avg_contract_duration,
+          avg_tax: avg_tax,
+        };
+
         localStorage.setItem("form1Data", JSON.stringify(form1Data));
 
         window.location.href = "http://127.0.0.1:5500/page-2.html";
       }
 
-      function handleScroll(){
-        const calculator = document.getElementById("calculator").getBoundingClientRect();
+      function handleScroll() {
+        const calculator = document
+          .getElementById("calculator")
+          .getBoundingClientRect();
         const top = calculator.top;
 
         window.scrollTo({
           top: top,
           behavior: "smooth",
         });
+      }
+
+      function formatCurrency() {
+        event.preventDefault();
+        const inputId = event.target.id;
+        let newKey = event.key;
+        let value = event.target.value;
+        const isValidKey = /([\d]|Backspace)/g.test(newKey);
+
+        if(!isValidKey){
+          return;
+        }
+
+        if(event.key === 'Backspace'){
+          value = value.slice(0, -1);
+          newKey = "";
+        }
+
+        if(value !== ""){
+          const testBeyondZeros = /[1-9]/g.test(value);
+          if(testBeyondZeros){
+            value = parseInt(value.replace(/[^0-9]/g,""));
+          }else{ 
+            value = 0;
+          }
+        }
+        
+
+        value = value + newKey;
+        value = value / 100;
+
+        const formattedValue = new Intl.NumberFormat("pt-br", {
+          style: "currency",
+          currency: "BRL",
+        }).format(value);
+        document.getElementById(inputId).value = formattedValue;
       }
     </script>
   </head>
@@ -106,9 +144,27 @@
           style="height: 24px"
         />
         <div id="social-links">
-          <i class="bi bi-facebook"></i>
-          <i class="bi bi-instagram"></i>
-          <i class="bi bi-linkedin"></i>
+          <a
+            href="https://www.facebook.com/Credaluga"
+            target="_blank"
+            referrerpolicy="no-referrer"
+          >
+            <i class="bi bi-facebook"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/credaluga/"
+            target="_blank"
+            referrerpolicy="no-referrer"
+          >
+            <i class="bi bi-instagram"></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/company/credaluga/"
+            target="_blank"
+            referrerpolicy="no-referrer"
+          >
+            <i class="bi bi-linkedin"></i>
+          </a>
         </div>
       </nav>
 
@@ -120,9 +176,27 @@
           style="height: 24px"
         />
         <div id="social-links">
-          <i class="bi bi-facebook"></i>
-          <i class="bi bi-instagram"></i>
-          <i class="bi bi-linkedin"></i>
+          <a
+            href="https://www.facebook.com/Credaluga"
+            target="_blank"
+            referrerpolicy="no-referrer"
+          >
+            <i class="bi bi-facebook"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/credaluga/"
+            target="_blank"
+            referrerpolicy="no-referrer"
+          >
+            <i class="bi bi-instagram"></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/company/credaluga/"
+            target="_blank"
+            referrerpolicy="no-referrer"
+          >
+            <i class="bi bi-linkedin"></i>
+          </a>
         </div>
       </nav>
     </div>
@@ -189,6 +263,7 @@
                         name="avg_ticket"
                         class="form-control"
                         placeholder="Ticket Médio da Imobiliária"
+                        onkeydown="formatCurrency()"
                         required
                       /><label for="avg_ticket"
                         >Ticket Médio da Imobiliária</label
@@ -299,37 +374,76 @@
               <div class="row">
                 <div class="col-xs-12 col-md-6">
                   <div class="benefits-box">
-                    <div class="icon"><img width="32" src="/imgs/img-profit.png" alt=""></div>
+                    <div class="icon">
+                      <img width="32" src="/imgs/img-profit.png" alt="" />
+                    </div>
                     <div class="text-content">
-                      <h3 class="headline-small">Buscam maximizar a rentabilidade</h3>
-                      <p>Oferece uma visão clara dos custos associados a inadimplência, permitindo a implementação de estratégias para minimizar prejuízos e otimizar os resultados financeiros.</p>
+                      <h3 class="headline-small">
+                        Buscam maximizar a rentabilidade
+                      </h3>
+                      <p>
+                        Oferece uma visão clara dos custos associados a
+                        inadimplência, permitindo a implementação de estratégias
+                        para minimizar prejuízos e otimizar os resultados
+                        financeiros.
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div class="col-xs-12 col-md-6">
                   <div class="benefits-box">
-                    <div class="icon"><img width="32" src="/imgs/img-riskmanagement.png" alt=""></div>
+                    <div class="icon">
+                      <img
+                        width="32"
+                        src="/imgs/img-riskmanagement.png"
+                        alt=""
+                      />
+                    </div>
                     <div class="text-content">
-                      <h3 class="headline-small">Desejam uma gestão de riscos eficiente</h3>
-                      <p>Facilita a identificação e avaliação dos riscos envolvidos na administração de contratos, auxiliando na tomada de decisões estratégicas para proteger o patrimônio da imobiliária.</p>
+                      <h3 class="headline-small">
+                        Desejam uma gestão de riscos eficiente
+                      </h3>
+                      <p>
+                        Facilita a identificação e avaliação dos riscos
+                        envolvidos na administração de contratos, auxiliando na
+                        tomada de decisões estratégicas para proteger o
+                        patrimônio da imobiliária.
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div class="col-xs-12 col-md-6">
                   <div class="benefits-box">
-                    <div class="icon"><img width="32" src="/imgs/img-operation.png" alt=""></div>
+                    <div class="icon">
+                      <img width="32" src="/imgs/img-operation.png" alt="" />
+                    </div>
                     <div class="text-content">
-                      <h3 class="headline-small">Procuram otimizar processos operacionais</h3>
-                      <p>Agiliza a análise e o planejamento financeiro, proporcionando uma visão abrangente dos custos envolvidos na administração de contratos inadimplentes.</p>
+                      <h3 class="headline-small">
+                        Procuram otimizar processos operacionais
+                      </h3>
+                      <p>
+                        Agiliza a análise e o planejamento financeiro,
+                        proporcionando uma visão abrangente dos custos
+                        envolvidos na administração de contratos inadimplentes.
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div class="col-xs-12 col-md-6">
                   <div class="benefits-box">
-                    <div class="icon"><img width="32" src="/imgs/img-stars.png" alt=""></div>
+                    <div class="icon">
+                      <img width="32" src="/imgs/img-stars.png" alt="" />
+                    </div>
                     <div class="text-content">
-                      <h3 class="headline-small">Desejam fornecer um serviço diferenciado aos proprietários</h3>
-                      <p>Permite uma comunicação transparente sobre os desafios e custos associados à gestão de contratos, fortalecendo a relação de confiança com os proprietários.</p>
+                      <h3 class="headline-small">
+                        Desejam fornecer um serviço diferenciado aos
+                        proprietários
+                      </h3>
+                      <p>
+                        Permite uma comunicação transparente sobre os desafios e
+                        custos associados à gestão de contratos, fortalecendo a
+                        relação de confiança com os proprietários.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -339,13 +453,13 @@
         </div>
         <div class="col-xs-12 col-md-6 offset-md-3">
           <button
-          type="submit"
-          class="btn btn-primary btn-lg"
-          style="width: 100%; margin-top: 104px"
-          onclick="handleScroll()"
-        >
-          Quero utilizar a calculadora
-        </button>
+            type="submit"
+            class="btn btn-primary btn-lg"
+            style="width: 100%; margin-top: 104px"
+            onclick="handleScroll()"
+          >
+            Quero utilizar a calculadora
+          </button>
         </div>
       </div>
       <div class="row">
